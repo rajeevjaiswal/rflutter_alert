@@ -69,52 +69,55 @@ class Alert {
 
   // Alert dialog content widget
   Widget _buildDialog() {
-    return AlertDialog(
-      shape: style.alertBorder ?? _defaultShape(),
-      titlePadding: EdgeInsets.all(0.0),
-      title: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _getCloseButton(),
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                    20, (style.isCloseButton ? 0 : 20), 20, 0),
-                child: Column(
-                  children: <Widget>[
-                    _getImage(),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      title,
-                      style: style.titleStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: desc == null ? 5 : 10,
-                    ),
-                    desc == null
-                        ? Container()
-                        : Text(
-                            desc,
-                            style: style.descStyle,
-                            textAlign: TextAlign.center,
-                          ),
-                    content == null ? Container() : content,
-                  ],
-                ),
-              )
-            ],
+    return WillPopScope(
+      onWillPop: (){},
+      child: AlertDialog(
+        shape: style.alertBorder ?? _defaultShape(),
+        titlePadding: EdgeInsets.all(0.0),
+        title: Container(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _getCloseButton(),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      20, (style.isCloseButton ? 0 : 20), 20, 0),
+                  child: Column(
+                    children: <Widget>[
+                      _getImage(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        title,
+                        style: style.titleStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: desc == null ? 5 : 10,
+                      ),
+                      desc == null
+                          ? Container()
+                          : Text(
+                              desc,
+                              style: style.descStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                      content == null ? Container() : content,
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      ),
-      contentPadding: style.buttonAreaPadding,
-      content: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: _getButtons(),
+        contentPadding: style.buttonAreaPadding,
+        content: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: _getButtons(),
+          ),
         ),
       ),
     );
