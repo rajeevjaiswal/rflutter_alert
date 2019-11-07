@@ -205,7 +205,7 @@ class Alert {
     switch (type) {
       case AlertType.success:
         response = Image.asset(
-          '$kImagePath/icon_success.png',
+          '$kImagePath/icon_success.jpeg',
           package: 'rflutter_alert',
         );
         break;
@@ -217,7 +217,7 @@ class Alert {
         break;
       case AlertType.info:
         response = Image.asset(
-          '$kImagePath/icon_info.png',
+          '$kImagePath/icon_info.jpeg',
           package: 'rflutter_alert',
         );
         break;
