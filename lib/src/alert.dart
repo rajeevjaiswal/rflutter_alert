@@ -207,18 +207,24 @@ class Alert {
         response = Image.asset(
           '$kImagePath/icon_success.jpeg',
           package: 'rflutter_alert',
+          height: 80,
+          width: 80,
         );
         break;
       case AlertType.error:
         response = Image.asset(
           '$kImagePath/icon_error.png',
           package: 'rflutter_alert',
+          height: 80,
+          width: 80,
         );
         break;
       case AlertType.info:
         response = Image.asset(
           '$kImagePath/icon_info.jpeg',
           package: 'rflutter_alert',
+          height: 80,
+          width: 80,
         );
         break;
       case AlertType.warning:
