@@ -7,11 +7,12 @@
  * See LICENSE for distribution and usage details.
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 import 'alert_style.dart';
 import 'animation_transition.dart';
-import 'dialog_button.dart';
 import 'constants.dart';
+import 'dialog_button.dart';
 
 /// Main class to create alerts.
 ///
@@ -25,20 +26,23 @@ class Alert {
   final String desc;
   final Widget content;
   final List<DialogButton> buttons;
+  final void Function(String) onLinkClick;
+  final Color urlColor;
 
   /// Alert constructor
   ///
   /// [context], [title] are required.
-  Alert({
-    @required this.context,
-    this.type,
-    this.style = const AlertStyle(),
-    this.image,
-    @required this.title,
-    this.desc,
-    this.content,
-    this.buttons,
-  });
+  Alert(
+      {@required this.context,
+      this.type,
+      this.style = const AlertStyle(),
+      this.image,
+      @required this.title,
+      this.desc,
+      this.content,
+      this.buttons,
+      this.onLinkClick,
+      this.urlColor = const Color(0xff5c8eda)});
 
   /// Displays defined alert window
   void show() {
@@ -70,7 +74,7 @@ class Alert {
   // Alert dialog content widget
   Widget _buildDialog() {
     return WillPopScope(
-      onWillPop: (){},
+      onWillPop: () {},
       child: AlertDialog(
         shape: style.alertBorder ?? _defaultShape(),
         titlePadding: EdgeInsets.all(0.0),
@@ -99,10 +103,20 @@ class Alert {
                       ),
                       desc == null
                           ? Container()
-                          : Text(
-                              desc,
-                              style: style.descStyle,
-                              textAlign: TextAlign.center,
+                          : SingleChildScrollView(
+                              child: Linkify(
+                                onOpen: (link) => onLinkClick(link.url),
+                                text: desc,
+                                style: style.descStyle,
+                                linkStyle:
+                                    style.descStyle.copyWith(color: urlColor),
+                              )
+                              /*Text(
+                                desc,
+                                style: style.descStyle,
+                                textAlign: TextAlign.center,
+                              )*/
+                              ,
                             ),
                       content == null ? Container() : content,
                     ],
