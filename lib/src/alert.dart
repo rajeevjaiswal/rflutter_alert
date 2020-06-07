@@ -6,8 +6,8 @@
  * Copyright (c) 2018 Ratel, LLC. All rights reserved.
  * See LICENSE for distribution and usage details.
  */
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 
 import 'alert_style.dart';
 import 'animation_transition.dart';
@@ -28,6 +28,7 @@ class Alert {
   final List<DialogButton> buttons;
   final void Function(String) onLinkClick;
   final Color urlColor;
+  final String linkText;
 
   /// Alert constructor
   ///
@@ -42,7 +43,8 @@ class Alert {
       this.content,
       this.buttons,
       this.onLinkClick,
-      this.urlColor = const Color(0xff5c8eda)});
+      this.urlColor = const Color(0xff5c8eda),
+      this.linkText = ''});
 
   /// Displays defined alert window
   void show() {
@@ -104,19 +106,31 @@ class Alert {
                       desc == null
                           ? Container()
                           : SingleChildScrollView(
-                              child: Linkify(
-                                onOpen: (link) => onLinkClick(link.url),
-                                text: desc,
-                                style: style.descStyle,
-                                linkStyle:
-                                    style.descStyle.copyWith(color: urlColor),
-                              )
-                              /*Text(
-                                desc,
-                                style: style.descStyle,
-                                textAlign: TextAlign.center,
-                              )*/
-                              ,
+                              child: linkText != ''
+                                  ? RichText(
+                                      text: TextSpan(
+                                        text: desc,
+                                        style: style.descStyle,
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                              text: linkText,
+                                              style: style.descStyle.copyWith(
+                                                color: urlColor,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  onLinkClick("");
+                                                }),
+                                        ],
+                                      ),
+                                    )
+                                  : Text(
+                                      desc,
+                                      style: style.descStyle,
+                                      textAlign: TextAlign.center,
+                                    ),
                             ),
                       content == null ? Container() : content,
                     ],
