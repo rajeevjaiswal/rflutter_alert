@@ -116,6 +116,7 @@ class Alert {
                                               text: linkText,
                                               style: style.descStyle.copyWith(
                                                 color: urlColor,
+                                                fontWeight: FontWeight.bold,
                                                 decoration:
                                                     TextDecoration.underline,
                                               ),
